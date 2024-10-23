@@ -10,4 +10,4 @@ steps:
 
 # package up the contents into an image
 - name: 'gcr.io/go-containerregistry/crane:v0.20.2'
-  args: ['append', '-f',  'compiled.tar', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/ar1/hydrated:latest]
+  args: ['append', '-f',  'compiled.tar', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/ar1/hydrated:latest']
