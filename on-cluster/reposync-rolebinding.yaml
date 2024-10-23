@@ -1,4 +1,3 @@
-# ROOT_REPO/namespaces/ghost-a/sync-rolebinding.yaml
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
