@@ -16,8 +16,12 @@ steps:
     path: '/out'
 
 # get the output of the hydration into a tar file, needed for crane.
-- name: 'gcr.io/cloud-builders/tar'
-  args: ['-cvf', '/out/compiled.tar', '/out/config/']
+- name: 'ubuntu'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    tar -cvf /out/compiled.tar /out/config/
   volumes:
   - name: 'ws'
     path: '/out'
