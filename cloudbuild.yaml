@@ -27,7 +27,7 @@ steps:
 
     curl -fsSL -o install_kustomize.sh "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
     chmod +x ./install_kustomize.sh
-    ./install_kustomize.sh
+    ./install_kustomize.sh /usr/local/bin/
 
     ./nomos hydrate --no-api-server-check --source-format unstructured --path /workspace/config --output /workspace/compiled
 
