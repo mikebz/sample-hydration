@@ -20,6 +20,15 @@ steps:
   - |
     gcloud storage cp gs://config-management-release/released/latest/linux_amd64/nomos ./nomos
     chmod +x ./nomos
+    
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod +x ./get_helm.sh
+    ./get_helm.sh
+
+    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
+    chmod +x ./install_kustomize.sh
+    ./install_kustomize.sh
+
     ./nomos hydrate --no-api-server-check --source-format unstructured --path /workspace/config --output /workspace/compiled
 
 # get the output of the hydration into a tar file, needed for crane.
