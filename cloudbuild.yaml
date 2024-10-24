@@ -10,10 +10,16 @@ steps:
   args:
   - '-c'
   - |
-    cp -r off-cluster/config /out/config 
-  volumes:
-  - name: 'ws'
-    path: '/out'
+    cp -r off-cluster/config /workspace/config 
+
+# run nomos hydrate
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    nomos hydrate --no-api-server-check --source-format unstructured --path /workspace/config --output /workspace/compiled
+
 
 # get the output of the hydration into a tar file, needed for crane.
 - name: 'ubuntu'
@@ -21,21 +27,8 @@ steps:
   args:
   - '-c'
   - |
-    tar -cvf /out/compiled.tar /out/config/
-  volumes:
-  - name: 'ws'
-    path: '/out'
-
-# run nomos hydrate
-- name: 'gcr.io/config-management-release/nomos:v1.19.2'
-  args: ['hydrate', '--no-api-server-check', '--source-format', 'unstructured', '--path', '/out/config', '--output', '/out/compiled']
-  volumes:
-  - name: 'ws'
-    path: '/out'
+    tar -cvf /workspace/compiled.tar /workspace/compiled/
 
 # package up the contents into an image
 - name: 'gcr.io/go-containerregistry/crane:v0.20.2'
-  args: ['append', '-f',  '/out/compiled.tar', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/ar1/hydrated:latest']
-  volumes:
-  - name: 'ws'
-    path: '/out'
+  args: ['append', '-f',  '/workspace/compiled.tar', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/ar1/hydrated:latest']
