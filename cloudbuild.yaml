@@ -3,9 +3,18 @@ options:
 
 steps:
 
+# copy the configuration into a writeable directory because
+# of the kustomize caching.
+- name: 'ubuntu' # Or another image with `cp`
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    cp -r off-cluster/config /workspace/config 
+
 # run nomos hydrate
 - name: 'gcr.io/config-management-release/nomos:v1.19.2'
-  args: ['hydrate', '--no-api-server-check', '--source-format', 'unstructured', '--path', 'off-cluster/config', '--output', '/workspace/compiled']
+  args: ['hydrate', '--no-api-server-check', '--source-format', 'unstructured', '--path', '/workspace/config', '--output', '/workspace/compiled']
 
 # get the output of the hydration into a tar file, needed for crane.
 - name: 'gcr.io/cloud-builders/tar'
