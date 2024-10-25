@@ -1,0 +1,12 @@
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
+metadata:
+  name: ghost-chart
+  namespace: ghost-b
+spec:
+  sourceFormat: unstructured
+  sourceType: oci
+  oci:
+    image: us-central1-docker.pkg.dev/mikebz-ex1/ar1/hydrated:latest
+    dir: .
+    auth: k8sserviceaccount

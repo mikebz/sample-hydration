@@ -1,0 +1,13 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: syncs-repo
+  namespace: ghost-b
+subjects:
+- kind: ServiceAccount
+  name: ns-reconciler-ghost-b-ghost-chart-11
+  namespace: config-management-system
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
