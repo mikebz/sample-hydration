@@ -33,5 +33,5 @@ steps:
     tar -cvf /workspace/compiled.tar /workspace/compiled/
 
 # package up the contents into an image
-- name: 'gcr.io/go-containerregistry/crane:v0.20.2'
+- name: 'gcr.io/go-containerregistry/crane'
   args: ['append', '-f',  '/workspace/compiled.tar', '-t', 'us-central1-docker.pkg.dev/${PROJECT_ID}/ar1/hydrated:latest']
